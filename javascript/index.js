@@ -58,6 +58,8 @@ function startGame(){
    
 }
 
+
+
 function wack(e) {
     const className = e.target.parentElement.className;
     const index = className.indexOf(' up');
@@ -68,8 +70,17 @@ function wack(e) {
 
 }
 
-//añadimos un eventListener a cada Hans topo
+//añadimos un eventListener a cada Hans topo. Si el usuario hace click, se suma +1 al score
 
 for (mole of moles){
-    mole.addEventListener('click', wack);
+    // mole.addEventListener('click', wack);
+    mole.addEventListener('click', (e) => {
+        const className = e.target.parentElement.className;
+        const index = className.indexOf(' up');
+        e.target.parentElement.className = className.slice(0,index);
+        
+        currentScore++;
+        scoreBoard.textContent=currentScore;
+    });
+
 }
