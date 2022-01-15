@@ -43,13 +43,17 @@ function peep(){
     }, randomTime(500,1000));
 }
     
-
+//funcion que resetea las variables y comienza el juego. Deshabilita tambien el boton de Start para que no pueda haber dos juegos a la vez
 function startGame(){
     scoreBoard.textContent = 0;
     timeUp = false;
     currentScore = 0;
+
+    const btnStart = document.querySelector('button');
+    btnStart.disabled = true;
     
-    setTimeout(()=>timeUp = true, 15000);
+    setTimeout(()=>{timeUp = true;
+    btnStart.disabled=false;}, 15000);
     peep();
    
 }
@@ -63,6 +67,8 @@ function wack(e) {
     scoreBoard.textContent=currentScore;
 
 }
+
+//añadimos un eventListener a cada Hans topo
 
 for (mole of moles){
     mole.addEventListener('click', wack);
