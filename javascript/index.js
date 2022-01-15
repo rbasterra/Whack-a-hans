@@ -1,12 +1,17 @@
+//obtenemos todos los objetos que necesitamos manipular
 const holes = document.querySelectorAll('.hole');
 const moles = document.querySelectorAll('.mole');
 const scoreBoard = document.querySelector('.score');
 
+//definimos variables necesarias
 let lastHole, timeUp=false, currentScore=0;
 
 
+//funcion que crea un tiempo aleatorio en base a una maximo y un minimo
 const randomTime = (min, max) => Math.floor(Math.random() * (max - min) + min);
 
+//funcion para seleccionar uno de los agujeros aleatoriamente. Si el agujero aleatorio generado coincide con el ulimo agujero seleccionado (lastHole),
+//llamamos de nuevo a la funcion hasta que nos devuelva un numero de agujero aleatorio diferente 
 function randomHole (holes){
     const index = Math.floor(Math.random() * holes.length);
     
@@ -18,16 +23,47 @@ function randomHole (holes){
     return holes[index];
 }
 
+//funcion que muestra los Hans Topo. Para ello, llama a las dos funciones aleatorias anteriores:
+// randomHole --> selecciona un agujero aleatorio entre 0 y holes.length
+// randomTime --> genera un numero de milisegundos aleatorio entre 500 y 1000
+// setTimeout --> tras el tiempo aleatorio,  elimina la clase 'up' para que desaparezca el Hans topo. 
+//                Si el tiempo de juego no ha transcurrido, vuelve a llamar a peep() para que aparezca otro Hans topo
+
 function peep(){
     const hole = randomHole(holes);
     console.log(hole);
+    const initClass = hole.className;
+    //añadimos la clase 'up' para que aparezca el Hans topo
+    hole.className = initClass + ' up';
 
+    setTimeout(() => {hole.className = initClass
+        if (!timeUp){
+            peep();
+        }
+    }, randomTime(500,1000));
 }
+    
 
 function startGame(){
     scoreBoard.textContent = 0;
     timeUp = false;
     currentScore = 0;
-    peep();
+    
     setTimeout(()=>timeUp = true, 15000);
+    peep();
+   
+}
+
+function wack(e) {
+    const className = e.target.parentElement.className;
+    const index = className.indexOf(' up');
+    e.target.parentElement.className = className.slice(0,index);
+    
+    currentScore++;
+    scoreBoard.textContent=currentScore;
+
+}
+
+for (mole of moles){
+    mole.addEventListener('click', wack);
 }
