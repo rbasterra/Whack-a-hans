@@ -60,15 +60,15 @@ function startGame(){
 
 
 
-function wack(e) {
-    const className = e.target.parentElement.className;
-    const index = className.indexOf(' up');
-    e.target.parentElement.className = className.slice(0,index);
+// function wack(e) {
+//     const className = e.target.parentElement.className;
+//     const index = className.indexOf(' up');
+//     e.target.parentElement.className = className.slice(0,index);
     
-    currentScore++;
-    scoreBoard.textContent=currentScore;
+//     currentScore++;
+//     scoreBoard.textContent=currentScore;
 
-}
+// }
 
 //añadimos un eventListener a cada Hans topo. Si el usuario hace click, se suma +1 al score
 
